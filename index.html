@@ -41,7 +41,14 @@
                     <span v-for='n in 5-product.rating'>☆</span>
                 </div>
             </div>
-            </div>
+            <h1> Cart </h1>
+            <div v-for="item in cart">
+                <h2 v-text="item.name"></h2>
+                <figure>
+                    <img v-bind:src="item.image">
+                </figure>
+                <p v-html="item.location"></p>
+                <p> Price: {{cart.price}}</p>
 
         </main>
     </div>
@@ -56,7 +63,7 @@
             
             methods: {
                 addtoCart (product) {
-                    this.cart.push(product.id);
+                    this.cart.push(product);
                 },
                 showCheckout() {
                     this.showProduct = this.showProduct ? false : true;
