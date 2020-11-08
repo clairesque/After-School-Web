@@ -16,6 +16,8 @@
                 {{cartitemCount}}
                 <i class="fas fa-shopping-cart"></i>Checkout
             </button>
+            <button @click="sort('name-az')">Sort by Name A-Z</button>
+            <button @click="sort('name-za')">Sort by Name Z-A</button>
             
         </header>
         <main>
@@ -175,7 +177,24 @@
                     }
                     return productsArray.sort(compare);
                 },*/
-                
+                sortedSubjects() {
+                    if(this.sortType === '') return this.subjects;
+                    if(this.sortType === 'name-az') {
+                      return this.subjects.sort((a,b) => {
+                        if(a.name < b.name) return -1;
+                        if(a.name > b.name) return 1;
+                        return 0;
+                      });
+                    }
+                    if(this.sortType === 'name-za') {
+                        return this.subjects.sort((a,b) => {
+                          if(a.name < b.name) return 1;
+                          if(a.name > b.name) return -1;
+                          return 0;
+                        });
+                      }
+                    
+                  }
             }
 
         });
