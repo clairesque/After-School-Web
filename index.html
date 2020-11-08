@@ -22,6 +22,8 @@
             <button @click="sort('location-za')">Sort by Location Z-A</button>
             <button @click="sort('spaces-a')">Sort by Spaces Ascending</button>
             <button @click="sort('spaces-d')">Sort by Spaces Descending</button>
+            <button @click="sort('price-a')">Sort by Price Ascending</button>
+            <button @click="sort('price-d')">Sort by Price Descending</button>
         </header>
         <main>
 
@@ -221,6 +223,20 @@
                         return this.subjects.sort((a,b) => {
                           if(a.spaces < b.spaces) return -1;
                           if(a.spaces > b.spaces) return 1;
+                          return 0;
+                        });
+                      }
+                      if(this.sortType === 'price-d') {
+                        return this.subjects.sort((a,b) => {
+                          if(a.price < b.price) return -1;
+                          if(a.price > b.price) return -1;
+                          return 0;
+                        });
+                      }
+                      if(this.sortType === 'price-a') {
+                        return this.subjects.sort((a,b) => {
+                          if(a.price < b.price) return -1;
+                          if(a.price > b.price) return 1;
                           return 0;
                         });
                       }
