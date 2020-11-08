@@ -12,6 +12,10 @@
     <div id="app">
         <header>
             <h1 v-text="sitename"></h1>
+            <button v-on:click='showCheckout'>
+                {{cartitemCount}}
+                <i class="fas fa-shopping-cart"></i>Checkout
+            </button>
         </header>
         <main>
             
@@ -26,10 +30,17 @@
                 <button v-on:click='addtoCart(product)' v-if='canAddToCart(product)'>
                     Add to Cart
                 </button>
+                <button disabled="disabled" v-else>Add to Cart</button>
+                <span v-if='product.availableInventory === cartCount(product.id)'>All out!</span>
+                <span v-else-if="product.availableInventory - cartCount(product.id) < 5"> 
+                    Only {{product.availableInventory - cartCount(product.id)}} left!
+                </span>
+                <span v-else>Buy now!</span>
                 <div>
                     <span v-for='n in product.rating'>★</span>
                     <span v-for='n in 5-product.rating'>☆</span>
                 </div>
+            </div>
             </div>
 
         </main>
@@ -64,8 +75,15 @@
 		        }
 	}
 	return count;
-}
+},
+
             },
+            computed: {
+                cartitemCount: function () {
+                    return this.cart.length;
+                }
+                }
+        
         });
     </script>
 
