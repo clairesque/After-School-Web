@@ -5,6 +5,7 @@ var subjects = [{
 	"price": 100,
 	"image": "images/dog.png",
 	"availableInventory": 5,
+	"spaces":5,
 	"rating": 1
 }, 
 {
@@ -14,6 +15,7 @@ var subjects = [{
 	"price": 150,
 	"image": "images/dog.png",
 	"availableInventory": 5,
+	"spaces":5,
 	"rating": 3
 },
 {
@@ -23,6 +25,7 @@ var subjects = [{
 	"price": 200,
 	"image": "images/dog.png",
 	"availableInventory": 5,
+	"spaces":5,
 	"rating": 5
 }
 ]
