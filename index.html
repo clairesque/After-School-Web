@@ -6,13 +6,16 @@
     </script>
     <script src="subjects.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div id="app">
         <header>
             <h1 v-text="sitename"></h1>
-            <button v-on:click='showCheckout'>
+            <button v-on:click=showCheckout>
                 {{cartitemCount}}
                 <i class="fas fa-shopping-cart"></i>Checkout
             </button>
@@ -26,32 +29,43 @@
             <button @click="sort('price-d')">Sort by Price Descending</button>
         </header>
         <main>
-
             <div v-if="showProduct">
 
-                <div v-for="product in sortedSubjects">
-                    <h2 v-text="product.name"></h2>
-                    <figure>
-                        <img v-bind:src="product.image">
-                    </figure>
-                    <p v-html="product.location"></p>
-                    <p> Price: {{product.price}}</p>
-                    <p> Spaces: {{product.spaces}} </p>
-                    <button v-on:click='addtoCart(product)' v-if='canAddToCart(product)'>
-                        Add to Cart
-                    </button>
-                    <button disabled="disabled" v-else>Add to Cart</button>
-                    <span v-if='product.availableInventory === cartCount(product)'>All out!</span>
-                    <span v-else-if="product.availableInventory - cartCount(product) < 3">
-                        Only {{product.spaces}} left!
-                    </span>
-                    <span v-else>Buy now!</span>
-                    <div>
-                        <span v-for='n in product.rating'>★</span>
-                        <span v-for='n in 5-product.rating'>☆</span>
+                <div class="container">
+                    <div class="row">
+                        <div v-for="product in sortedSubjects">
+                            <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                                <div class="card" style="width: 20rem;">
+                                    <img class="card-img" v-bind:src="product.image">
+                                    <div class="card-body">
+                                        <h4 class="card-title" v-text="product.name"></h4>
+                                        <p class="card-text">Location: {{product.location}} </p>
+                                        <p class="card-text">Spaces: {{product.spaces}} </p>
+                                        <div class="buy d-flex justify-content-between align-items-center">
+                                            <div class="price text-success">
+                                                <h5 class="mt-4">${{product.price}}</h5>
+                                                <span v-if='product.availableInventory === cartCount(product)'>All
+                                                    out!</span>
+                                                <span v-else-if="product.availableInventory - cartCount(product) < 3">
+                                                    Only {{product.spaces}} left!
+                                                </span>
+                                                <span v-else>Buy now!</span>
+                                            </div>
+                                            <button class="btn btn-danger mt-3" v-on:click='addtoCart(product)'
+                                                v-if='canAddToCart(product)'><i class="fas fa-shopping-cart"></i> Add to
+                                                Cart</button>
+                                            <button class="btn btn-danger mt-3" disabled="disabled" v-else><i
+                                                    class="fas fa-shopping-cart"></i>Add to Cart</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
             <div v-else>
                 <h2>Checkout</h2>
                 <p>
@@ -73,7 +87,7 @@
                         </option>
                     </select>
                 </p>
-                <p><strong>Postal Code:</strong> <input v-model.number="order.postalCode" type='number' /> </p>
+                <p><strong>Postal Code:</strong> <input v-model.number="order.postalCode" type=number /> </p>
 
                 <p><input type="checkbox" id="gift" value="true" v-model="order.gift" v-bind:true-value="order.sendGift"
                         v-bind:false-value="order.dontSendGift">
@@ -165,7 +179,7 @@
                 },
                 sort(type) {
                     this.sortType = type;
-                  }
+                }
             },
             computed: {
                 cartitemCount: function () {
@@ -183,69 +197,77 @@
                     return productsArray.sort(compare);
                 },*/
                 sortedSubjects() {
-                    if(this.sortType === '') return this.subjects;
-                    if(this.sortType === 'name-az') {
-                      return this.subjects.sort((a,b) => {
-                        if(a.name < b.name) return -1;
-                        if(a.name > b.name) return 1;
-                        return 0;
-                      });
+                    if (this.sortType === '') return this.subjects;
+                    if (this.sortType === 'name-az') {
+                        return this.subjects.sort((a, b) => {
+                            if (a.name < b.name) return -1;
+                            if (a.name > b.name) return 1;
+                            return 0;
+                        });
                     }
-                    if(this.sortType === 'name-za') {
-                        return this.subjects.sort((a,b) => {
-                          if(a.name < b.name) return 1;
-                          if(a.name > b.name) return -1;
-                          return 0;
+                    if (this.sortType === 'name-za') {
+                        return this.subjects.sort((a, b) => {
+                            if (a.name < b.name) return 1;
+                            if (a.name > b.name) return -1;
+                            return 0;
                         });
-                      }
-                    if(this.sortType === 'location-az') {
-                      return this.subjects.sort((a,b) => {
-                        if(a.location < b.location) return -1;
-                        if(a.location > b.location) return 1;
-                        return 0;
-                      });
                     }
-                    if(this.sortType === 'location-za') {
-                        return this.subjects.sort((a,b) => {
-                          if(a.location < b.location) return 1;
-                          if(a.location > b.location) return -1;
-                          return 0;
+                    if (this.sortType === 'location-az') {
+                        return this.subjects.sort((a, b) => {
+                            if (a.location < b.location) return -1;
+                            if (a.location > b.location) return 1;
+                            return 0;
                         });
-                      }
-                    if(this.sortType === 'spaces-d') {
-                        return this.subjects.sort((a,b) => {
-                          if(a.spaces < b.spaces) return 1;
-                          if(a.spaces > b.spaces) return -1;
-                          return 0;
+                    }
+                    if (this.sortType === 'location-za') {
+                        return this.subjects.sort((a, b) => {
+                            if (a.location < b.location) return 1;
+                            if (a.location > b.location) return -1;
+                            return 0;
                         });
-                      }
-                      if(this.sortType === 'spaces-a') {
-                        return this.subjects.sort((a,b) => {
-                          if(a.spaces < b.spaces) return -1;
-                          if(a.spaces > b.spaces) return 1;
-                          return 0;
+                    }
+                    if (this.sortType === 'spaces-d') {
+                        return this.subjects.sort((a, b) => {
+                            if (a.spaces < b.spaces) return 1;
+                            if (a.spaces > b.spaces) return -1;
+                            return 0;
                         });
-                      }
-                      if(this.sortType === 'price-d') {
-                        return this.subjects.sort((a,b) => {
-                          if(a.price < b.price) return -1;
-                          if(a.price > b.price) return -1;
-                          return 0;
+                    }
+                    if (this.sortType === 'spaces-a') {
+                        return this.subjects.sort((a, b) => {
+                            if (a.spaces < b.spaces) return -1;
+                            if (a.spaces > b.spaces) return 1;
+                            return 0;
                         });
-                      }
-                      if(this.sortType === 'price-a') {
-                        return this.subjects.sort((a,b) => {
-                          if(a.price < b.price) return -1;
-                          if(a.price > b.price) return 1;
-                          return 0;
+                    }
+                    if (this.sortType === 'price-d') {
+                        return this.subjects.sort((a, b) => {
+                            if (a.price < b.price) return -1;
+                            if (a.price > b.price) return -1;
+                            return 0;
                         });
-                      }
-                  }
+                    }
+                    if (this.sortType === 'price-a') {
+                        return this.subjects.sort((a, b) => {
+                            if (a.price < b.price) return -1;
+                            if (a.price > b.price) return 1;
+                            return 0;
+                        });
+                    }
+                }
             }
 
         });
     </script>
-
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
