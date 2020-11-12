@@ -39,6 +39,16 @@ var subjects = [{
 	"rating": 1
 }, 
 {
+	"id": 11,
+    "name": "Geography",
+    "location": "Abu Dhabi",
+	"price": 150,
+	"image": "images/012-globe.png",
+	"availableInventory": 5,
+	"spaces":5,
+	"rating": 3
+},
+{
 	"id": 2,
     "name": "Mathematics",
     "location": "Abu Dhabi",
@@ -98,16 +108,7 @@ var subjects = [{
 	"spaces":5,
 	"rating": 1
 }, 
-{
-	"id": 11,
-    "name": "Geography",
-    "location": "Abu Dhabi",
-	"price": 150,
-	"image": "images/012-globe.png",
-	"availableInventory": 5,
-	"spaces":5,
-	"rating": 3
-},
+
 {
 	"id": 12,
     "name": "English",
