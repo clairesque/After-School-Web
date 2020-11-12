@@ -1,12 +1,18 @@
 .card-img {
-	width:40%;
-	height:40%;
-	margin-left:auto;
-	margin-right:auto;
-	margin-top:10%;
+	width: 40%;
+	height: 40%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10%;
 }
-p { margin:0 }
-.card{
+p { 
+	margin: 0;
+}
+.card {
     margin-bottom: 10px;
+}
+
+h1 {
+	text-align: center;
 }
 
