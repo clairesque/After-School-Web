@@ -4,8 +4,7 @@ var subjects = [{
 	"location": "Deira",
 	"price": 100,
 	"image": "images/044-watercolor.png",
-	"availableInventory": 5,
-	"spaces": 5
+	"availableInventory": 5
 },
 {
 	"id": 8,
@@ -13,8 +12,7 @@ var subjects = [{
 	"location": "International City",
 	"price": 300,
 	"image": "images/025-tuba.png",
-	"availableInventory": 5,
-	"spaces": 5
+	"availableInventory": 5
 },
 {
 	"id": 9,
@@ -22,8 +20,7 @@ var subjects = [{
 	"location": "Karama",
 	"price": 250,
 	"image": "images/048-backboard.png",
-	"availableInventory": 5,
-	"spaces": 5
+	"availableInventory": 5
 },
 {
 	"id": 1,
@@ -31,8 +28,7 @@ var subjects = [{
 	"location": "Deira",
 	"price": 400,
 	"image": "images/020-computer.png",
-	"availableInventory": 5,
-	"spaces": 5
+	"availableInventory": 5
 },
 {
 	"id": 11,
@@ -40,8 +36,7 @@ var subjects = [{
 	"location": "Al Nahda",
 	"price": 150,
 	"image": "images/012-globe.png",
-	"availableInventory": 5,
-	"spaces": 5
+	"availableInventory": 5
 },
 {
 	"id": 2,
@@ -49,8 +44,7 @@ var subjects = [{
 	"location": "Al Barsha",
 	"price": 350,
 	"image": "images/007-mathematics.png",
-	"availableInventory": 5,
-	"spaces": 5
+	"availableInventory": 5
 },
 {
 	"id": 3,
@@ -58,8 +52,7 @@ var subjects = [{
 	"location": "Business Bay",
 	"price": 100,
 	"image": "images/029-microscope.png",
-	"availableInventory": 5,
-	"spaces": 5
+	"availableInventory": 5
 },
 {
 	"id": 4,
@@ -67,8 +60,7 @@ var subjects = [{
 	"location": "Emirates Hills",
 	"price": 250,
 	"image": "images/027-compass.png",
-	"availableInventory": 5,
-	"spaces": 5
+	"availableInventory": 5
 },
 {
 	"id": 5,
@@ -76,8 +68,7 @@ var subjects = [{
 	"location": "Jebel Ali",
 	"price": 300,
 	"image": "images/056-chemical.png",
-	"availableInventory": 5,
-	"spaces": 5
+	"availableInventory": 5
 },
 {
 	"id": 6,
@@ -85,8 +76,7 @@ var subjects = [{
 	"location": "Al Nahda",
 	"price": 500,
 	"image": "images/050-newton-cradle.png",
-	"availableInventory": 5,
-	"spaces": 5
+	"availableInventory": 5
 },
 {
 	"id": 10,
@@ -94,8 +84,7 @@ var subjects = [{
 	"location": "International City",
 	"price": 450,
 	"image": "images/033-hourglass.png",
-	"availableInventory": 5,
-	"spaces": 5
+	"availableInventory": 5
 },
 
 {
@@ -104,7 +93,6 @@ var subjects = [{
 	"location": "Al Barsha",
 	"price": 250,
 	"image": "images/042-note.png",
-	"availableInventory": 5,
-	"spaces": 5
+	"availableInventory": 5
 }
 ]
