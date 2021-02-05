@@ -1,4 +1,5 @@
 const express = require('express')
+// created new express app
 const app = express()
 
 app.use(express.json())
@@ -9,10 +10,11 @@ app.use ((req, res, next) => {
     next();
 })
 
+// connected app with mongodb database
 const MongoClient = require('mongodb').MongoClient;
 let db;
 MongoClient.connect('mongodb+srv://MyMongoDBUser:Claire2710@gettingstarted.0k9dq.mongodb.net/', (err, client) => {    
-    db = client.db('webstore')
+    db = client.db('afterschoolweb')
 })
 
 app.get('/', (req, res, next) => {
@@ -28,12 +30,13 @@ app.param('collectionName', (req, res, next, collectionName) =>
 
 // return entire collection in descending order of price
 app.get('/collection/:collectionName', (req, res, next) => {
-        req.collection.find({}, {limit: 5, sort: [['price', -1]]}).toArray((e, results) => {
+        req.collection.find({}, {sort: [['price', -1]]}).toArray((e, results) => {
             if (e) return next(e)
             res.send(results)
         })
     })
 
+// started server on port 3000
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log('Express.js server running at localhost:3000')
