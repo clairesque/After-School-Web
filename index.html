@@ -207,154 +207,166 @@
         </main>
     </div>
     <script>
-        var webstore = new Vue({
-            el: "#app",
-            data: {
-                sitename: "After School Lessons",
-                subjects: subjects,
-                cart: [],
-                showProduct: true,
-                showCart: false,
-                order: {
-                    name: '',
-                    phone: '',
-                },
-                sortType: ''
-            },
+        fetch('https://clerissa-vueapp.herokuapp.com/collection/lessons', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json', // set the data type as JSON
+            }
+        }),
+            function (response) {
+                response.json().then(
+                    function (json) {
+                        console.log(json)
+                    });
 
-            methods: {
-                addtoCart(product) {
-                    this.cart.push(product);
-                    product.availableInventory--;
-                    this.showCart = true;
-                    this.showProduct = true;
-                },
-                del(product) {
-                    this.cart.splice(this.cart.indexOf(product), 1)
-                    product.availableInventory++;
-                },
-                showCheckout() {
-                    this.showProduct = this.showProduct ? false : true;
-                },
-                textOnly(e) {
-                    let char = String.fromCharCode(e.keyCode);
-                    if (/^[A-Za-z]+$/.test(char)) return true;
-                    else e.preventDefault();
-                },
-                numberOnly(e) {
-                    let char = String.fromCharCode(e.keyCode);
-                    if (/^^[0-9]+$/.test(char)) return true;
-                    else e.preventDefault();
-                },
-                viewCart() {
-                    this.showProduct = this.showProduct ? false : true;
-                },
-                submitForm() {
-
-                    fetch('https://clerissa-vueapp.herokuapp.com/collection/orders', {
-                        method: 'POST', // set the HTTP method as 'POST'
-                        headers: {
-                            'Content-Type': 'application/json', // set the data type as JSON
+                var webstore = new Vue({
+                    el: "#app",
+                    data: {
+                        sitename: "After School Lessons",
+                        subjects: subjects,
+                        cart: [],
+                        showProduct: true,
+                        showCart: false,
+                        order: {
+                            name: '',
+                            phone: '',
                         },
-                        body: JSON.stringify(this.order), // need to stringify the JSON object
-                    })
-                        .then(response => response.json())
-                        .then(responseJSON => {
-                            document.getElementById('response').innerText = JSON.stringify(responseJSON);
-                        })
-                        .catch((error) => {
-                            document.getElementById('error').innerText = error;
-                        });
+                        sortType: ''
+                    },
 
-                    alert('Your order has been submitted! Thank you for your purchase.');
+                    methods: {
+                        addtoCart(product) {
+                            this.cart.push(product);
+                            product.availableInventory--;
+                            this.showCart = true;
+                            this.showProduct = true;
+                        },
+                        del(product) {
+                            this.cart.splice(this.cart.indexOf(product), 1)
+                            product.availableInventory++;
+                        },
+                        showCheckout() {
+                            this.showProduct = this.showProduct ? false : true;
+                        },
+                        textOnly(e) {
+                            let char = String.fromCharCode(e.keyCode);
+                            if (/^[A-Za-z]+$/.test(char)) return true;
+                            else e.preventDefault();
+                        },
+                        numberOnly(e) {
+                            let char = String.fromCharCode(e.keyCode);
+                            if (/^^[0-9]+$/.test(char)) return true;
+                            else e.preventDefault();
+                        },
+                        viewCart() {
+                            this.showProduct = this.showProduct ? false : true;
+                        },
+                        submitForm() {
 
-                },
-                canAddToCart(product) {
-                    return product.availableInventory > 0
-                },
-                cartDisplay() {
-                    return this.cart.length > 0;
-                },
-                cartCount(id) {
-                    let count = 0;
-                    for (let i = 0; i < this.cart.length; i++) {
-                        if (this.cart[i] === id) {
-                            count++;
+                            fetch('https://clerissa-vueapp.herokuapp.com/collection/orders', {
+                                method: 'POST', // set the HTTP method as 'POST'
+                                headers: {
+                                    'Content-Type': 'application/json', // set the data type as JSON
+                                },
+                                body: JSON.stringify(this.order), // need to stringify the JSON object
+                            })
+                                .then(response => response.json())
+                                .then(responseJSON => {
+                                    document.getElementById('response').innerText = JSON.stringify(responseJSON);
+                                })
+                                .catch((error) => {
+                                    document.getElementById('error').innerText = error;
+                                });
+
+                            alert('Your order has been submitted! Thank you for your purchase.');
+
+                        },
+                        canAddToCart(product) {
+                            return product.availableInventory > 0
+                        },
+                        cartDisplay() {
+                            return this.cart.length > 0;
+                        },
+                        cartCount(id) {
+                            let count = 0;
+                            for (let i = 0; i < this.cart.length; i++) {
+                                if (this.cart[i] === id) {
+                                    count++;
+                                }
+                            }
+                            return count;
+                        },
+                        sort(type) {
+                            this.sortType = type;
+                        }
+                    },
+                    computed: {
+                        cartitemCount: function () {
+                            return this.cart.length;
+                        },
+
+                        sortedSubjects() {
+                            if (this.sortType === '') return this.subjects;
+                            if (this.sortType === 'name-az') {
+                                return this.subjects.sort((a, b) => {
+                                    if (a.name < b.name) return -1;
+                                    if (a.name > b.name) return 1;
+                                    return 0;
+                                });
+                            }
+                            if (this.sortType === 'name-za') {
+                                return this.subjects.sort((a, b) => {
+                                    if (a.name < b.name) return 1;
+                                    if (a.name > b.name) return -1;
+                                    return 0;
+                                });
+                            }
+                            if (this.sortType === 'location-az') {
+                                return this.subjects.sort((a, b) => {
+                                    if (a.location < b.location) return -1;
+                                    if (a.location > b.location) return 1;
+                                    return 0;
+                                });
+                            }
+                            if (this.sortType === 'location-za') {
+                                return this.subjects.sort((a, b) => {
+                                    if (a.location < b.location) return 1;
+                                    if (a.location > b.location) return -1;
+                                    return 0;
+                                });
+                            }
+                            if (this.sortType === 'spaces-d') {
+                                return this.subjects.sort((a, b) => {
+                                    if (a.availableInventory < b.availableInventory) return 1;
+                                    if (a.availableInventory > b.availableInventory) return -1;
+                                    return 0;
+                                });
+                            }
+                            if (this.sortType === 'spaces-a') {
+                                return this.subjects.sort((a, b) => {
+                                    if (a.availableInventory < b.availableInventory) return -1;
+                                    if (a.availableInventory > b.availableInventory) return 1;
+                                    return 0;
+                                });
+                            }
+                            if (this.sortType === 'price-d') {
+                                return this.subjects.sort((a, b) => {
+                                    if (a.price < b.price) return 1;
+                                    if (a.price > b.price) return -1;
+                                    return 0;
+                                });
+                            }
+                            if (this.sortType === 'price-a') {
+                                return this.subjects.sort((a, b) => {
+                                    if (a.price < b.price) return -1;
+                                    if (a.price > b.price) return 1;
+                                    return 0;
+                                });
+                            }
                         }
                     }
-                    return count;
-                },
-                sort(type) {
-                    this.sortType = type;
-                }
-            },
-            computed: {
-                cartitemCount: function () {
-                    return this.cart.length;
-                },
 
-                sortedSubjects() {
-                    if (this.sortType === '') return this.subjects;
-                    if (this.sortType === 'name-az') {
-                        return this.subjects.sort((a, b) => {
-                            if (a.name < b.name) return -1;
-                            if (a.name > b.name) return 1;
-                            return 0;
-                        });
-                    }
-                    if (this.sortType === 'name-za') {
-                        return this.subjects.sort((a, b) => {
-                            if (a.name < b.name) return 1;
-                            if (a.name > b.name) return -1;
-                            return 0;
-                        });
-                    }
-                    if (this.sortType === 'location-az') {
-                        return this.subjects.sort((a, b) => {
-                            if (a.location < b.location) return -1;
-                            if (a.location > b.location) return 1;
-                            return 0;
-                        });
-                    }
-                    if (this.sortType === 'location-za') {
-                        return this.subjects.sort((a, b) => {
-                            if (a.location < b.location) return 1;
-                            if (a.location > b.location) return -1;
-                            return 0;
-                        });
-                    }
-                    if (this.sortType === 'spaces-d') {
-                        return this.subjects.sort((a, b) => {
-                            if (a.availableInventory < b.availableInventory) return 1;
-                            if (a.availableInventory > b.availableInventory) return -1;
-                            return 0;
-                        });
-                    }
-                    if (this.sortType === 'spaces-a') {
-                        return this.subjects.sort((a, b) => {
-                            if (a.availableInventory < b.availableInventory) return -1;
-                            if (a.availableInventory > b.availableInventory) return 1;
-                            return 0;
-                        });
-                    }
-                    if (this.sortType === 'price-d') {
-                        return this.subjects.sort((a, b) => {
-                            if (a.price < b.price) return 1;
-                            if (a.price > b.price) return -1;
-                            return 0;
-                        });
-                    }
-                    if (this.sortType === 'price-a') {
-                        return this.subjects.sort((a, b) => {
-                            if (a.price < b.price) return -1;
-                            if (a.price > b.price) return 1;
-                            return 0;
-                        });
-                    }
-                }
-            }
-
-        });
+                });
     </script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
