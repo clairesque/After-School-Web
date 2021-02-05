@@ -212,7 +212,7 @@
             el: "#app",
             data: {
                 sitename: "After School Lessons",
-                subjects: subjects,
+                subjects: [],
                 cart: [],
                 showProduct: true,
                 showCart: false,
@@ -223,12 +223,15 @@
                 sortType: ''
             },
             created: function () {
-                    fetch('https://clerissa-vueapp.herokuapp.com').then(
-                    function(response) {        
-                        response.text().then(function(text) {                
-                            console.log(text)         
-                        });    
-                    });
+                // replace the URL to your Heroku app and route 
+                fetch('https://clerissa-vueapp.herokuapp.com/collection/lessons').then(
+                    function (response) {
+                        response.json().then(
+                            function (json) {
+                                // note that we used 'store.product' instead of 'this.product' 
+                                webstore.subjects = json;
+                            });
+                    })
             },
             methods: {
                 addtoCart(product) {
