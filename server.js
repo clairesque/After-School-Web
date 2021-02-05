@@ -1,4 +1,5 @@
 const express = require('express')
+
 // created new express app
 const app = express()
 app.use(express.json())

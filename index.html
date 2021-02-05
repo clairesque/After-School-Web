@@ -250,6 +250,22 @@
                     this.showProduct = this.showProduct ? false : true;
                 },
                 submitForm() {
+
+                    fetch('https://clerissa-vueapp.herokuapp.com/collection/orders', {
+                        method: 'POST', // set the HTTP method as 'POST'
+                        headers: {
+                            'Content-Type': 'application/json', // set the data type as JSON
+                        },
+                        body: JSON.stringify(this.order), // need to stringify the JSON object
+                    })
+                        .then(response => response.json())
+                        .then(responseJSON => {
+                            document.getElementById('response').innerText = JSON.stringify(responseJSON);
+                        })
+                        .catch((error) => {
+                            document.getElementById('error').innerText = error;
+                        });
+
                     alert('Your order has been submitted! Thank you for your purchase.');
 
                 },
