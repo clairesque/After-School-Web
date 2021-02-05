@@ -222,19 +222,11 @@
                 },
                 sortType: ''
             },
-            mounted: {
-                loadPage() {
+            mounted: function () {
                     fetch('https://clerissa-vueapp.herokuapp.com/collection/lessons')
-                        .then(function (response) {
-                            if (response.status != 200) {
-                                console.log(response.status);
-                            } else {
-                                response.json().then(function (data) {
-                                    this.response = data;
-                                }.bind(this));
-                            }
-                        }.bind(this))
-                }
+                        .then(response => {
+                            console.log(response.status);
+                        })
             },
             methods: {
                 addtoCart(product) {
