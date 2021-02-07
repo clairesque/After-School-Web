@@ -298,19 +298,20 @@
                     for (var i = 0; i < this.cart.length; i++) {
                         newQuantity = this.cart[i].availableInventory;
                         console.log(newQuantity)
-                
-                   // newQuantity = this.cart[1].availableInventory - this.cart[0].quantity;
-                    id = this.cart[i]._id;
-                    fetch('https://clerissa-vueapp.herokuapp.com/collection/lessons/' + id, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ "availableInventory": newQuantity }),
-                    })
-                        .then(response => response.json())
-                }
-            },
+
+                        id = this.cart[i]._id;
+                        fetch('https://clerissa-vueapp.herokuapp.com/collection/lessons/' + id, {
+                            method: 'PUT',
+                            headers: {
+                                "Access-Control-Allow-Origin": "*",
+                                "Content-Type": "application/json",
+                                Accept: "application/json",
+                            },
+                            body: JSON.stringify({ "availableInventory": newQuantity }),
+                        })
+                            .then(response => response.json())
+                    }
+                },
                 canAddToCart(product) {
                     return product.availableInventory > 0
                 },
