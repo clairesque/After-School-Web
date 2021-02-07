@@ -224,7 +224,7 @@
                 sortType: ''
             },
             created: function () {
-                fetch('http://localhost:3000/collection/lessons').then(
+                fetch('https://clerissa-vueapp.herokuapp.com/collection/lessons').then(
                     function (response) {
                         response.json().then(
                             function (json) {
@@ -281,7 +281,7 @@
                     for (var i = 0; i < this.cart.length; i++) {
                         this.order['items'].push({ id: this.cart[i].id, name: this.cart[i].name, quantity: this.cart[i].quantity, price: this.cart[i].quantity * this.cart[i].price });
                     }
-                    fetch('http://localhost:3000/collection/orders', {
+                    fetch('https://clerissa-vueapp.herokuapp.com/collection/orders', {
                         method: 'POST', // set the HTTP method as 'POST'
                         headers: {
                             'Content-Type': 'application/json', // set the data type as JSON
@@ -301,7 +301,7 @@
                 
                    // newQuantity = this.cart[1].availableInventory - this.cart[0].quantity;
                     id = this.cart[i]._id;
-                    fetch('http://localhost:3000/collection/lessons/' + id, {
+                    fetch('https://clerissa-vueapp.herokuapp.com/collection/lessons/' + id, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
