@@ -77,7 +77,7 @@
                         <div v-for="product in sortedSubjects">
                             <div class="col-12 col-sm-8 col-md-6 col-lg-4">
                                 <div class="card" style="width: 15rem;">
-                                    <img class="card-img" v-bind:src="product.image">
+                                    <img class="card-img img-fluid" v-bind:src="product.image">
                                     <div class="card-body">
                                         <h4 class="card-title" v-text="product.name"></h4>
                                         <p class="card-text">Location: {{product.location}} </p>
@@ -137,10 +137,10 @@
                                         <div class="form-group row">
                                             <label class="col-lg-3 col-form-label form-control-label"></label>
                                             <div class="col-lg-9">
-                                                <input v-on:click="submitForm"
+                                                <input v-on:click="submitForm(); update();"
                                                     v-if="order.custName === '' || order.phone === ''" type="button"
                                                     class="btn btn-primary" value="Checkout" disabled>
-                                                <input v-on:click="submitForm" v-else type="button"
+                                                <input v-on:click="submitForm(); update();" v-else type="button"
                                                     class="btn btn-primary" value="Checkout">
                                             </div>
                                         </div>
@@ -224,7 +224,7 @@
                 sortType: ''
             },
             created: function () {
-                fetch('https://clerissa-vueapp.herokuapp.com/collection/lessons').then(
+                fetch('http://localhost:3000/collection/lessons').then(
                     function (response) {
                         response.json().then(
                             function (json) {
@@ -279,9 +279,9 @@
                 },
                 submitForm() {
                     for (var i = 0; i < this.cart.length; i++) {
-                        this.order['items'].push({id: this.cart[i].id, name: this.cart[i].name, quantity: this.cart[i].quantity, price: this.cart[i].quantity*this.cart[i].price});
+                        this.order['items'].push({ id: this.cart[i].id, name: this.cart[i].name, quantity: this.cart[i].quantity, price: this.cart[i].quantity * this.cart[i].price });
                     }
-                    fetch('https://clerissa-vueapp.herokuapp.com/collection/orders', {
+                    fetch('http://localhost:3000/collection/orders', {
                         method: 'POST', // set the HTTP method as 'POST'
                         headers: {
                             'Content-Type': 'application/json', // set the data type as JSON
@@ -290,9 +290,27 @@
                     })
                         .then(response => response.json())
 
+
                     alert('Your order has been submitted! Thank you for your purchase.');
 
                 },
+                update() {
+                    for (var i = 0; i < this.cart.length; i++) {
+                        newQuantity = this.cart[i].availableInventory;
+                        console.log(newQuantity)
+                
+                   // newQuantity = this.cart[1].availableInventory - this.cart[0].quantity;
+                    id = this.cart[i]._id;
+                    fetch('http://localhost:3000/collection/lessons/' + id, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ "availableInventory": newQuantity }),
+                    })
+                        .then(response => response.json())
+                }
+            },
                 canAddToCart(product) {
                     return product.availableInventory > 0
                 },
