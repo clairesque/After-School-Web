@@ -8,7 +8,7 @@ app.use ((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.header("Access-Control-Allow-Headers","*");
     res.setHeader('Access-Control-Allow-Methods', 'PUT');
-    res.setHeader('Access-Control-Allow-Methods', 'PUSH');
+    res.setHeader('Access-Control-Allow-Methods', 'POST');
     next();
 })
 
