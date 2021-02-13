@@ -7,6 +7,7 @@ app.set('port', 3000)
 app.use ((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.header("Access-Control-Allow-Headers","*");
+    res.setHeader('Access-Control-Allow-Methods', 'PUT');
     next();
 })
 
@@ -24,6 +25,17 @@ MongoClient.connect('mongodb+srv://MyMongoDBUser:Claire2710@gettingstarted.0k9dq
 app.get('/', (req, res, next) => {
     res.send('Select a collection, e.g., /collection/lessons')
 })
+
+let logger = (req, res, next) => {
+    let method = req.method;
+    let url = req.url;
+    let status = res.statusCode;
+    let log = `${method}:${url} ${status}`;
+    console.log(log);
+    next();
+  };
+
+app.use(logger);
 
 // get the collection name
 app.param('collectionName', (req, res, next, collectionName) => 
@@ -80,6 +92,11 @@ app.delete('/collection/:collectionName/:id', (req, res, next) => {
             {msg: 'success'} : {msg: 'error'})    
         })
     })
+
+app.use((req, res, next) => {
+    res.status(404).send("Error, not found!")
+    next()
+});
 
 // started server on port 3000
 const port = process.env.PORT || 3000;
