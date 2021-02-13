@@ -284,6 +284,7 @@
                     fetch('https://clerissa-vueapp.herokuapp.com/collection/orders', {
                         method: 'POST', // set the HTTP method as 'POST'
                         headers: {
+                            "Access-Control-Allow-Origin": "*",
                             'Content-Type': 'application/json', // set the data type as JSON
                         },
                         body: JSON.stringify(this.order), // need to stringify the JSON object
