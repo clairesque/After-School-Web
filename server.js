@@ -12,8 +12,7 @@ app.use ((req, res, next) => {
 
 // load the static html file
 var path = require("path");
-var staticPath = path.resolve(__dirname, "");
-app.use(express.static(staticPath));
+app.use(express.static(path.resolve(__dirname, "public")));
 
 // connected app with mongodb database
 const MongoClient = require('mongodb').MongoClient;
